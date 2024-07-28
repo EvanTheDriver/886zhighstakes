@@ -8,7 +8,9 @@ Motor armL(13);
 Motor intake (11);
 Motor conveyer (6);
 adi::DigitalOut mogo (1);
+adi::DigitalOut intup (2);
 IMU imu(16);
+
 //vertical tracking wheel = 18
 //horizontal 19
 /**)
@@ -92,6 +94,7 @@ void autonomous() {}
 void opcontrol()
 {	
 	bool mogoState = false;
+	bool intState = false;
 	while (true)
 	{
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
@@ -147,6 +150,12 @@ void opcontrol()
 		{	
 			mogoState = !mogoState;
 			mogo.set_value(mogoState);
+		}
+
+		if (master.get_digital_new_press (DIGITAL_B))
+		{	
+			intState = !intState;
+			intup.set_value(intState);
 		}
 
 
